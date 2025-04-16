@@ -4,28 +4,29 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 
-# Load .env file
+# Load .env variables
 load_dotenv()
 
+# Initialize Flask app
 app = Flask(__name__)
 CORS(app)
 
-# MongoDB connection
+# Connect to MongoDB
 mongo_uri = os.getenv("MONGO_URI")
 client = MongoClient(mongo_uri)
-db = client["menumate"]  # You can change the DB name if needed
+db = client["menumate"]  # Use whatever name you want
 
-# Test route for MongoDB
+# Your original test route
+@app.route('/api/test', methods=['GET'])
+def test():
+    return jsonify({'message': 'Backend Connected!'})
+
+# MongoDB test route
 @app.route('/api/testdb', methods=['GET'])
 def test_db():
-    db.test.insert_one({"message": "MongoDB is connected!", "status": True})
-    data = list(db.test.find({}, {"_id": 0}))
-    return jsonify(data)
-
-# Existing imports and routes
-# from auth import auth_bp
-# app.register_blueprint(auth_bp)
-# etc...
+    db.test.insert_one({"msg": "Mongo is connected!", "status": True})
+    result = list(db.test.find({}, {"_id": 0}))
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
