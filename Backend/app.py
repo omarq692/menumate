@@ -1,30 +1,31 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from dotenv import load_dotenv
 from pymongo import MongoClient
+from dotenv import load_dotenv
 import os
 
-from healthlogs import get_all_healthlogs
-
-# Load environment variables from .env file
+# Load .env file
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-# MongoDB setup
-MONGO_URI = os.getenv("MONGO_URI")
-client = MongoClient(MONGO_URI)
-db = client["menumate"]
+# MongoDB connection
+mongo_uri = os.getenv("MONGO_URI")
+client = MongoClient(mongo_uri)
+db = client["menumate"]  # You can change the DB name if needed
 
-@app.route("/")
-def home():
-    return jsonify({"message": "MenuMate backend is running!"})
+# Test route for MongoDB
+@app.route('/api/testdb', methods=['GET'])
+def test_db():
+    db.test.insert_one({"message": "MongoDB is connected!", "status": True})
+    data = list(db.test.find({}, {"_id": 0}))
+    return jsonify(data)
 
-@app.route("/api/healthlogs", methods=["GET"])
-def healthlogs():
-    logs = get_all_healthlogs(db)
-    return jsonify(logs)
+# Existing imports and routes
+# from auth import auth_bp
+# app.register_blueprint(auth_bp)
+# etc...
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
