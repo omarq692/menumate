@@ -3,6 +3,7 @@ from flask_cors import CORS
 from pymongo import MongoClient
 from bson import ObjectId
 from dotenv import load_dotenv
+import requests
 import os
 
 # Load environment variables
@@ -14,6 +15,7 @@ CORS(app)
 
 # Connect to MongoDB Atlas
 mongo_uri = os.getenv("MONGO_URI")
+spoonacular_key = os.getenv("SPOONACULAR_API_KEY")
 client = MongoClient(mongo_uri)
 db = client["menumate"]
 
@@ -32,7 +34,6 @@ def serialize_doc(doc):
 
 # ---------------------- SOCIAL MEDIA ROUTES ----------------------
 
-# Register a new user
 @app.route('/api/users/register', methods=['POST'])
 def register_user():
     data = request.get_json()
@@ -53,7 +54,6 @@ def register_user():
     user['_id'] = str(result.inserted_id)
     return jsonify(user), 201
 
-# Create a post
 @app.route('/api/posts', methods=['POST'])
 def create_post():
     data = request.get_json()
@@ -77,7 +77,6 @@ def create_post():
     inserted_post = db.posts.find_one({"_id": result.inserted_id})
     return jsonify(serialize_doc(inserted_post)), 201
 
-# Get all posts
 @app.route('/api/posts', methods=['GET'])
 def get_all_posts():
     posts = list(db.posts.find().sort("timestamp", -1))
@@ -94,7 +93,6 @@ def get_all_posts():
 
     return jsonify(posts_with_usernames), 200
 
-# Like a post
 @app.route('/api/posts/<post_id>/like', methods=['POST'])
 def like_post(post_id):
     user_id = request.get_json().get('user_id')
@@ -110,7 +108,6 @@ def like_post(post_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Comment on a post
 @app.route('/api/posts/<post_id>/comment', methods=['POST'])
 def comment_post(post_id):
     data = request.get_json()
@@ -135,9 +132,8 @@ def comment_post(post_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ---------------------- NUTRITIONAL TRACKER ROUTES ----------------------
+# ---------------------- NUTRITION TRACKER ROUTES ----------------------
 
-# Add a food log
 @app.route('/api/healthlogs', methods=['POST'])
 def add_health_log():
     try:
@@ -150,7 +146,6 @@ def add_health_log():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Get all food logs for a user
 @app.route('/api/healthlogs/<user_id>', methods=['GET'])
 def get_health_logs(user_id):
     try:
@@ -159,7 +154,51 @@ def get_health_logs(user_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ---------------------- ROOT TEST ----------------------
+# ---------------------- SPOONACULAR AUTO-NUTRITION ----------------------
+
+@app.route('/api/autofill-nutrition', methods=['POST'])
+def autofill_nutrition():
+    try:
+        data = request.get_json()
+        food_description = data.get('description')
+
+        if not food_description:
+            return jsonify({"error": "No description provided"}), 400
+
+        url = "https://api.spoonacular.com/recipes/parseIngredients"
+        params = {
+            "apiKey": spoonacular_key,
+            "ingredientList": food_description,
+            "servings": 1
+        }
+
+        response = requests.post(url, params=params)
+        result = response.json()
+
+        if not result or not isinstance(result, list):
+            return jsonify({"error": "Spoonacular returned no data"}), 500
+
+        item = result[0]
+        nutrition = item.get("nutrition", {}).get("nutrients", [])
+
+        def get_nutrient(name):
+            for n in nutrition:
+                if n['name'].lower() == name.lower():
+                    return n['amount']
+            return 0
+
+        return jsonify({
+            "food_name": item.get("name", "Unknown"),
+            "calories": get_nutrient("Calories"),
+            "protein": get_nutrient("Protein"),
+            "carbs": get_nutrient("Carbohydrates"),
+            "fats": get_nutrient("Fat")
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# ---------------------- ROOT ROUTE ----------------------
 
 @app.route('/', methods=['GET'])
 def home():
