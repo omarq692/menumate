@@ -1,0 +1,7 @@
+Flask
+flask_cors
+flask_bcrypt
+authlib
+python-dotenv
+gunicorn
+requests
