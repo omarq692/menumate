@@ -9,17 +9,16 @@ import os
 # Load environment variables
 load_dotenv()
 
-# Initialize Flask app
 app = Flask(__name__)
 CORS(app)
 
-# Connect to MongoDB Atlas
+# Connect to MongoDB
 mongo_uri = os.getenv("MONGO_URI")
 spoonacular_key = os.getenv("SPOONACULAR_API_KEY")
 client = MongoClient(mongo_uri)
 db = client["menumate"]
 
-# Helper: Convert MongoDB ObjectId to string
+# Helper to serialize MongoDB objects
 def serialize_doc(doc):
     doc["_id"] = str(doc["_id"])
     if "user_id" in doc:
@@ -32,7 +31,7 @@ def serialize_doc(doc):
                 comment["user_id"] = str(comment["user_id"])
     return doc
 
-# ---------------------- SOCIAL MEDIA ROUTES ----------------------
+# ---------------------- Social Media Routes ----------------------
 
 @app.route('/api/users/register', methods=['POST'])
 def register_user():
@@ -132,7 +131,7 @@ def comment_post(post_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ---------------------- NUTRITION TRACKER ROUTES ----------------------
+# ---------------------- Health Log Routes ----------------------
 
 @app.route('/api/healthlogs', methods=['POST'])
 def add_health_log():
@@ -154,7 +153,7 @@ def get_health_logs(user_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ---------------------- SPOONACULAR AUTO-NUTRITION ----------------------
+# ---------------------- Spoonacular API Autofill ----------------------
 
 @app.route('/api/autofill-nutrition', methods=['POST'])
 def autofill_nutrition():
@@ -166,14 +165,17 @@ def autofill_nutrition():
             return jsonify({"error": "No description provided"}), 400
 
         url = "https://api.spoonacular.com/recipes/parseIngredients"
-        params = {
-            "apiKey": spoonacular_key,
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        payload = {
             "ingredientList": food_description,
             "servings": 1
         }
 
-        response = requests.post(url, params=params)
+        response = requests.post(url, headers=headers, data=payload, params={"apiKey": spoonacular_key})
         result = response.json()
+        print("Spoonacular response:", result)
 
         if not result or not isinstance(result, list):
             return jsonify({"error": "Spoonacular returned no data"}), 500
@@ -198,13 +200,13 @@ def autofill_nutrition():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ---------------------- ROOT ROUTE ----------------------
+# ---------------------- Root Test ----------------------
 
 @app.route('/', methods=['GET'])
 def home():
     return jsonify({"message": "Welcome to MenuMate Backend!"})
 
-# ---------------------- RUN APP ----------------------
+# ---------------------- Run App ----------------------
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
