@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shared Experiences</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="config.js"></script>
+
+  <style>
+    body {
+      background-color: #2d6a4f;
+      color: white;
+      font-family: 'Oswald', sans-serif;
+      padding: 2rem;
+    }
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .shared-entry {
+      background-color: #1b4332;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .shared-entry.expanded {
+      background-color: #2f5f49;
+    }
+    .entry-details {
+      display: none;
+      margin-top: 1rem;
+    }
+    .shared-entry.expanded .entry-details {
+      display: block;
+    }
+    .action-buttons {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .btn-action {
+      border: none;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      border-radius: 50rem;
+      color: white;
+      white-space: nowrap;
+    }
+    .btn-starred {
+      background-color: #52b788;
+    }
+    .btn-delete {
+      background-color: #e63946;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Shared Experiences With You</h1>
+    </div>
+
+    <div id="sharedContainer" class="mt-4"></div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const container = document.getElementById('sharedContainer');
+
+    async function fetchSharedExperiences() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/shared_experiences`, { credentials: 'include' });
+        const data = await res.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+          container.innerHTML = "<p class='text-center text-light'>No shared experiences nearby at the moment.</p>";
+          return;
+        }
+
+        container.innerHTML = '';
+
+        data.forEach(exp => {
+          const card = document.createElement('div');
+          card.className = 'shared-entry';
+          const name = exp.name || exp.email.split('@')[0];
+
+          card.innerHTML = `
+            <strong>${name}</strong>
+            <div class="entry-details">
+              <p><strong>Recipes:</strong> ${exp.recipes || 'N/A'}</p>
+              <p><strong>Achievements:</strong> ${exp.achievements || 'N/A'}</p>
+              <p><strong>Hobbies:</strong> ${exp.hobbies || 'N/A'}</p>
+              <div class="action-buttons">
+                <button class="btn-action btn-starred" onclick="event.stopPropagation(); toggleStar('${exp.email}')">
+                  ${exp.starred ? '★ Unstar' : '☆ Save'}
+                </button>
+                <button class="btn-action btn-delete" onclick="event.stopPropagation(); deleteOneShared('${exp.email}')">
+                  🗑 Delete
+                </button>
+              </div>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            card.classList.toggle('expanded');
+          });
+
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Error fetching shared experiences:', error);
+        container.innerHTML = "<p class='text-danger'>Failed to load shared experiences.</p>";
+      }
+    }
+
+    async function toggleStar(senderEmail) {
+      try {
+        await fetch(`${API_BASE_URL}/api/shared/star`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: senderEmail })
+        });
+        fetchSharedExperiences();
+      } catch (error) {
+        console.error('Error toggling star:', error);
+      }
+    }
+
+    async function deleteOneShared(senderEmail) {
+      try {
+        await fetch(`${API_BASE_URL}/api/shared/delete_one`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: senderEmail })
+        });
+        fetchSharedExperiences();
+      } catch (error) {
+        console.error('Error deleting one shared experience:', error);
+      }
+    }
+
+    async function sendLocation() {
+      if (!navigator.geolocation) return;
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          await fetch(`${API_BASE_URL}/api/track_location`, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ latitude, longitude })
+          });
+          await fetchSharedExperiences();
+        } catch (error) {
+          console.error('Error sending location:', error);
+        }
+      }, (error) => {
+        console.warn('Geolocation permission denied.', error);
+      });
+    }
+
+    // Regularly update location and refresh nearby experiences
+    setInterval(sendLocation, 30000); // every 30 seconds
+
+    sendLocation();
+  </script>
+</body>
+</html>
