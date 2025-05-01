@@ -114,31 +114,17 @@
     </div>
   </div>
 
+  <!-- ✅ Config API base -->
   <script src="config.js"></script>
-  <script>
-    // 🔑 Extract token from URL and store it
-    const urlParams = new URLSearchParams(window.location.search);
-    const tokenFromURL = urlParams.get("token");
-    if (tokenFromURL) {
-      localStorage.setItem("jwt_token", tokenFromURL);
-      history.replaceState(null, "", window.location.pathname); // Clean URL
-    }
 
-    const token = localStorage.getItem("jwt_token");
+  <script>
     let userEmail = null;
 
     async function fetchUser() {
-      if (!token) {
-        alert("⚠️ Not logged in. Please sign in.");
-        window.location.href = "https://kerolosassad.github.io/MenuMate/";
-        return;
-      }
-
       try {
         const res = await fetch(`${API_BASE_URL}/api/user`, {
-          headers: {
-            "Authorization": "Bearer " + token
-          }
+          method: "GET",
+          credentials: "include"
         });
 
         const data = await res.json();
@@ -147,14 +133,12 @@
           userEmail = data.email;
           document.getElementById("userDisplay").textContent = data.display_name;
         } else {
-          alert("⚠️ Session expired or invalid.");
-          localStorage.removeItem("jwt_token");
+          alert("⚠️ You must be logged in to use this page.");
           window.location.href = "https://kerolosassad.github.io/MenuMate/";
         }
       } catch (err) {
         console.error("❌ Failed to fetch user info:", err);
         alert("⚠️ Could not verify user session.");
-        localStorage.removeItem("jwt_token");
         window.location.href = "https://kerolosassad.github.io/MenuMate/";
       }
     }
@@ -162,8 +146,10 @@
     fetchUser();
 
     const form = document.getElementById('experienceForm');
+
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+
       if (!form.checkValidity()) {
         form.classList.add('was-validated');
         return;
@@ -185,8 +171,8 @@
       try {
         const saveRes = await fetch(`${API_BASE_URL}/api/experience`, {
           method: "POST",
+          credentials: "include",
           headers: {
-            "Authorization": "Bearer " + token,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(data)
@@ -207,8 +193,9 @@
       }
     });
 
+    // 🛰️ EXPERIENCE SHARE TRACKER (background location sending)
     async function sendLocationPeriodically() {
-      if (!navigator.geolocation || !token) return;
+      if (!navigator.geolocation) return;
 
       async function sendLocation() {
         navigator.geolocation.getCurrentPosition(async (position) => {
@@ -217,10 +204,8 @@
           try {
             await fetch(`${API_BASE_URL}/api/track_location`, {
               method: "POST",
-              headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-              },
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ latitude, longitude })
             });
           } catch (err) {
@@ -231,7 +216,9 @@
         });
       }
 
+      // First immediate send
       await sendLocation();
+      // Then every 30 seconds
       setInterval(sendLocation, 30000);
     }
 
