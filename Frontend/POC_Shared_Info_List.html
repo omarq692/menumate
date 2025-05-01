@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -81,7 +81,7 @@
 
     async function fetchSharedExperiences() {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/shared_experiences`, { credentials: 'include' });
+        const res = await fetch(${API_BASE_URL}/api/shared_experiences, { credentials: 'include' });
         const data = await res.json();
 
         if (!Array.isArray(data) || data.length === 0) {
@@ -96,7 +96,7 @@
           card.className = 'shared-entry';
           const name = exp.name || exp.email.split('@')[0];
 
-          card.innerHTML = `
+          card.innerHTML = 
             <strong>${name}</strong>
             <div class="entry-details">
               <p><strong>Recipes:</strong> ${exp.recipes || 'N/A'}</p>
@@ -111,7 +111,7 @@
                 </button>
               </div>
             </div>
-          `;
+          ;
 
           card.addEventListener('click', () => {
             card.classList.toggle('expanded');
@@ -127,7 +127,7 @@
 
     async function toggleStar(senderEmail) {
       try {
-        await fetch(`${API_BASE_URL}/api/shared/star`, {
+        await fetch(${API_BASE_URL}/api/shared/star, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -141,7 +141,7 @@
 
     async function deleteOneShared(senderEmail) {
       try {
-        await fetch(`${API_BASE_URL}/api/shared/delete_one`, {
+        await fetch(${API_BASE_URL}/api/shared/delete_one, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -158,7 +158,7 @@
       navigator.geolocation.getCurrentPosition(async (position) => {
         try {
           const { latitude, longitude } = position.coords;
-          await fetch(`${API_BASE_URL}/api/track_location`, {
+          await fetch(${API_BASE_URL}/api/track_location, {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
