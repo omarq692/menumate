@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Recipes – MenuMate</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #2d1b64;
+        --accent-red: #c94a44;
+        --accent-green: #648b3c;
+        --light-bg: #d8c7b0;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: var(--light-bg);
+        margin: 0;
+        padding-top: 80px;
+      }
+
+      .navbar {
+        background-color: var(--accent-red);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1030;
+      }
+
+      .navbar-brand {
+        color: white;
+      }
+
+      .navbar-nav .nav-link {
+        color: white;
+      }
+
+      .navbar .btn-success {
+        background-color: var(--accent-green);
+        border: none;
+      }
+
+      .navbar-brand img {
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      .card img {
+        height: 200px;
+        object-fit: cover;
+      }
+
+      footer {
+        background-color: var(--accent-green);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a
+          class="navbar-brand fw-bold d-flex align-items-center"
+          href="index.html"
+        >
+          <img
+            src="assets/images/MenuMate_simplified_Logo.png"
+            alt="MenuMate Logo"
+          />
+          MenuMate
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="explore.html">Explore</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+            <li class="nav-item">
+              <a class="btn btn-success ms-3" href="#">Sign Up</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Section -->
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Explore Recipes</h1>
+
+      <!-- Optional Search -->
+      <div class="mb-4 text-center">
+        <input
+          type="text"
+          class="form-control w-50 mx-auto"
+          placeholder="Search recipes..."
+        />
+      </div>
+
+      <!-- Recipe Cards -->
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <img
+              src="https://source.unsplash.com/400x300/?salad"
+              class="card-img-top"
+              alt="Salad"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Avocado Quinoa Salad</h5>
+              <p class="card-text">
+                A refreshing mix of greens, avocado, and protein-rich quinoa.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm">View Recipe</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <img
+              src="https://source.unsplash.com/400x300/?grilled-chicken"
+              class="card-img-top"
+              alt="Chicken"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Grilled Chicken Bowl</h5>
+              <p class="card-text">
+                Lean grilled chicken with roasted veggies and brown rice.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm">View Recipe</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <img
+              src="https://source.unsplash.com/400x300/?smoothie"
+              class="card-img-top"
+              alt="Smoothie"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Berry Protein Smoothie</h5>
+              <p class="card-text">
+                High-protein smoothie with berries and Greek yogurt.
+              </p>
+              <a href="#" class="btn btn-outline-primary btn-sm">View Recipe</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5">
+      <div class="container">
+        <p class="mb-0">© 2025 MenuMate. Eat clean. Share freely.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
