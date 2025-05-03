@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
 from bson import ObjectId
@@ -10,8 +10,33 @@ from datetime import datetime
 # Load env variables
 load_dotenv()
 
-app = Flask(__name__)
+# ---------- Define Paths to Frontend templates and static files (css/js) ----------
+frontend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../Frontend'))
+
+app = Flask(
+    __name__,
+    template_folder = os.path.join(frontend_path, 'templates'),
+    static_folder = os.path.join(frontend_path, 'static')
+)
+
 CORS(app)
+
+# Route to Landing page
+@app.route('/')
+def index():
+    return render_template('index.html')
+# Route to Explore Page
+@app.route('/explore')
+def explore():
+    return render_template('explore.html')
+# Route to Profile Page
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+# Route to SignUp Page
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
 
 # MongoDB connection
 mongo_uri = os.getenv("MONGO_URI")
@@ -206,12 +231,6 @@ def daily_summary(user_id):
         return jsonify(result[0]), 200
     else:
         return jsonify({"message": "No logs for today"}), 200
-
-# ---------- Root ----------
-
-@app.route('/')
-def home():
-    return jsonify({"message": "Welcome to MenuMate Backend!"})
 
 # ---------- Run App ----------
 
