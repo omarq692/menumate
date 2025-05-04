@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>MenuMate | Nutrition</title>
+    <meta
+      name="description"
+      content="Explore and share healthy recipes with the MenuMate community"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/img/MenuMate_Logo.png"
+    />
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="assets/css/slicknav.css" />
+    <link rel="stylesheet" href="assets/css/flaticon.css" />
+    <link rel="stylesheet" href="assets/css/gijgo.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/animated-headline.css" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="assets/css/slick.css" />
+    <link rel="stylesheet" href="assets/css/nice-select.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+      <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+          <div class="preloader-circle"></div>
+          <div class="preloader-img pere-text">
+            <img src="assets/img//MenuMate_Logo.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+      <div class="header-area">
+        <div class="main-header header-sticky">
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-xl-2 col-lg-2 col-md-1">
+                <div class="logo">
+                  <a href="index.html"
+                    ><img src="assets/img/logo/logo.png" alt="MenuMate" />
+                  </a>
+                </div>
+              </div>
+              <div class="col-xl-10 col-lg-10 col-md-10">
+                <div class="menu-main d-flex align-items-center justify-content-end">
+                  <div class="main-menu f-right d-none d-lg-block">
+                    <nav>
+                      <ul id="navigation">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="explore.html">Explore</a></li>
+                        <li><a class="active" href="nutrition.html">Nutrition</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                      </ul>
+                    </nav>
+                  </div>
+                  <div class="header-right-btn f-right d-none d-lg-block ml-15">
+                    <a href="upload-recipe.html" class="btn header-btn">Log In</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="mobile_menu d-block d-lg-none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <div class="slider-area slider-area2">
+        <div class="single-slider d-flex align-items-center slider-height2">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-xl-7 col-lg-8 col-md-10">
+                <div class="hero-wrapper">
+                  <div class="hero__caption">
+                    <h1>Nutrition Tracker</h1>
+                    <p>Log what you eat and watch your macros add up</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nutrition Content -->
+      <section class="service-area section-padding40">
+        <div class="container py-5">
+          <!-- Title -->
+          <div class="text-center mb-5">
+            <h2>Nutrition Tracker</h2>
+          </div>
+
+          <!-- Log Food Form -->
+          <div class="row justify-content-center mb-5">
+            <div class="col-md-6">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <form id="nutritionForm" class="form-inline justify-content-center">
+                    <input
+                      type="text"
+                      id="foodInput"
+                      class="form-control mr-2 flex-grow-1"
+                      placeholder="What did you eat?"
+                      required
+                    />
+                    <button type="submit" class="btn btn-success px-4">Add</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Totals -->
+          <div class="row mb-4" id="totalsRow"></div>
+
+          <!-- Logged Items Table -->
+          <div class="row">
+            <div class="col">
+              <div class="card shadow-sm">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                      <thead class="thead-light">
+                        <tr>
+                          <th>Food</th>
+                          <th>Meal</th>
+                          <th>Calories</th>
+                          <th>Protein (g)</th>
+                          <th>Carbs (g)</th>
+                          <th>Fats (g)</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="logTable"></tbody>
+                      <tfoot class="font-weight-bold">
+                        <tr id="totalsRowFooter"></tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Recipe Detail + Like/Comment Modal (removed as not needed) -->
+
+    <!-- Footer -->
+    <footer>
+      <div
+        class="footer-wrappr section-bg3"
+        data-background="assets/img/gallery/footer-bg.png"
+      >
+        <div class="footer-area footer-padding">
+          <div class="container">
+            <div class="row justify-content-between">
+              <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12">
+                <div class="single-footer-caption mb-50">
+                  <div class="footer-logo mb-25">
+                    <a href="index.html"
+                      ><img
+                        src="assets/img/logo/logo2-removebg-preview.png"
+                        alt=""
+                    /></a>
+                  </div>
+                  <div class="header-area">
+                    <div class="main-header main-header2">
+                      <div class="menu-main d-flex align-items-center justify-content-start">
+                        <div class="main-menu main-menu2">
+                          <nav>
+                            <ul>
+                              <li><a href="index.html">Home</a></li>
+                              <li><a href="explore.html">Explore</a></li>
+                              <li><a href="nutrition.html">Nutrition</a></li>
+                              <li><a href="profile.html">Profile</a></li>
+                            </ul>
+                          </nav>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom-area">
+          <div class="container">
+            <div class="footer-border">
+              <div class="row">
+                <div class="col-xl-10">
+                  <div class="footer-copy-right">
+                    <p>
+                      &copy;
+                      <script>
+                        document.write(new Date().getFullYear());
+                      </script>
+                      MenuMate. All rights reserved.
+                      <i class="fa fa-heart" aria-hidden="true"></i> Eat clean.
+                      Share freely.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll Up -->
+    <div id="back-top">
+      <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+
+    <!-- JS here -->
+    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/jquery.slicknav.min.js"></script>
+    <script src="./assets/js/owl.carousel.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/animated.headline.js"></script>
+    <script src="./assets/js/jquery.magnific-popup.js"></script>
+    <script src="./assets/js/gijgo.min.js"></script>
+    <script src="./assets/js/jquery.nice-select.min.js"></script>
+    <script src="./assets/js/jquery.sticky.js"></script>
+    <script src="./assets/js/jquery.counterup.min.js"></script>
+    <script src="./assets/js/waypoints.min.js"></script>
+    <script src="./assets/js/jquery.countdown.min.js"></script>
+    <script src="./assets/js/hover-direction-snake.min.js"></script>
+    <script src="./assets/js/contact.js"></script>
+    <script src="./assets/js/jquery.form.js"></script>
+    <script src="./assets/js/jquery.validate.min.js"></script>
+    <script src="./assets/js/mail-script.js"></script>
+    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/main.js"></script>
+
+    <script>
+      // store today's entries here
+      let entries = [];
+
+      function renderNutrition() {
+        const totals = entries.reduce(
+          (t, i) => ({
+            calories: t.calories + i.calories,
+            protein: t.protein + i.protein,
+            carbs: t.carbs + i.carbs,
+            fats: t.fats + i.fats,
+          }),
+          { calories: 0, protein: 0, carbs: 0, fats: 0 }
+        );
+
+        const cardsHtml = [
+          { label: "Calories", value: totals.calories.toFixed(0), unit: "kcal" },
+          { label: "Protein", value: totals.protein.toFixed(1), unit: "g" },
+          { label: "Carbs", value: totals.carbs.toFixed(1), unit: "g" },
+          { label: "Fats", value: totals.fats.toFixed(1), unit: "g" },
+        ]
+          .map(
+            (c) => `
+            <div class="col-md-3 mb-3">
+              <div class="card text-center">
+                <div class="card-body py-4">
+                  <h5 class="card-title">${c.label}</h5>
+                  <p class="display-4 mb-0">${c.value}</p>
+                  <small class="text-muted">${c.unit}</small>
+                </div>
+              </div>
+            </div>
+          `
+          )
+          .join("");
+        document.getElementById("totalsRow").innerHTML = cardsHtml;
+
+        const rowsHtml = entries
+          .map(
+            (it, idx) => `
+            <tr>
+              <td>${it.food_name}</td>
+              <td>${it.meal_type}</td>
+              <td>${it.calories.toFixed(0)}</td>
+              <td>${it.protein.toFixed(1)}</td>
+              <td>${it.carbs.toFixed(1)}</td>
+              <td>${it.fats.toFixed(1)}</td>
+              <td>
+                <button onclick="removeEntry(${idx})" class="btn btn-sm btn-outline-danger">&times;</button>
+              </td>
+            </tr>
+          `
+          )
+          .join("");
+        document.getElementById("logTable").innerHTML = rowsHtml;
+
+        document.getElementById("totalsRowFooter").innerHTML = `
+          <td colspan="2">Totals</td>
+          <td>${totals.calories.toFixed(0)}</td>
+          <td>${totals.protein.toFixed(1)}</td>
+          <td>${totals.carbs.toFixed(1)}</td>
+          <td>${totals.fats.toFixed(1)}</td>
+          <td></td>
+        `;
+      }
+
+      function removeEntry(i) {
+        entries.splice(i, 1);
+        renderNutrition();
+      }
+
+      document.getElementById("nutritionForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const food = document.getElementById("foodInput").value.trim();
+        if (!food) return;
+
+        const data = {
+          food_name: food,
+          meal_type: "Snack",
+          calories: Math.random() * 200 + 50,
+          protein: Math.random() * 10 + 1,
+          carbs: Math.random() * 30 + 1,
+          fats: Math.random() * 15 + 1,
+        };
+
+        entries.push(data);
+        renderNutrition();
+        document.getElementById("foodInput").value = "";
+      });
+
+      renderNutrition();
+    </script>
+  </body>
+</html>

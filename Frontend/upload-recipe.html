@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Upload a Recipe – MenuMate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/img/MenuMate_Logo.png"
+    />
+
+    <!-- CSS here (identical to your other pages) -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="assets/css/slicknav.css" />
+    <link rel="stylesheet" href="assets/css/flaticon.css" />
+    <link rel="stylesheet" href="assets/css/gijgo.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/animated-headline.css" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="assets/css/slick.css" />
+    <link rel="stylesheet" href="assets/css/nice-select.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <!-- Preloader + Header copy‑pasted from index.html -->
+    <div id="preloader-active">…</div>
+    <header>…</header>
+
+    <main>
+      <!-- use your “about-area2 section-padding40” wrapper so it matches spacing -->
+      <div class="about-area2 section-padding40">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <!-- Section title styled like the rest of your site -->
+              <div class="section-tittle text-center mb-50">
+                <h2>Upload a New Recipe</h2>
+              </div>
+
+              <!-- the form itself -->
+              <form id="recipe-form" class="form-contact contact_form" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="title">Recipe Title</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        name="title"
+                        placeholder="E.g. Avocado Quinoa Salad"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="ingredients">Ingredients (one per line)</label>
+                      <textarea
+                        class="form-control"
+                        id="ingredients"
+                        name="ingredients"
+                        rows="4"
+                        placeholder="1 avocado\n1 cup quinoa\n…"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="steps">Preparation Steps</label>
+                      <textarea
+                        class="form-control"
+                        id="steps"
+                        name="steps"
+                        rows="6"
+                        placeholder="Step 1: …\nStep 2: …"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="photo">Recipe Photo</label>
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="photo"
+                        name="photo"
+                        accept="image/*"
+                        required
+                      />
+                    </div>
+                    <div class="form-group text-center">
+                      <img
+                        id="preview"
+                        src="#"
+                        alt="Preview"
+                        class="img-fluid d-none"
+                        style="max-height:200px; border-radius:8px;"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 text-center">
+                    <!-- reuse your btn styles -->
+                    <button type="submit" class="btn">Submit Recipe</button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer copy‑pasted from index.html -->
+    <footer>…</footer>
+
+    <!-- JS here (identical to your other pages) -->
+    <script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.slicknav.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/animated.headline.js"></script>
+    <script src="assets/js/jquery.magnific-popup.js"></script>
+    <script src="assets/js/gijgo.min.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/jquery.sticky.js"></script>
+    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="assets/js/waypoints.min.js"></script>
+    <script src="assets/js/jquery.countdown.min.js"></script>
+    <script src="assets/js/hover-direction-snake.min.js"></script>
+    <script src="assets/js/contact.js"></script>
+    <script src="assets/js/jquery.form.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+    <script src="assets/js/mail-script.js"></script>
+    <script src="assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- your custom upload logic -->
+    <script>
+    $(function(){
+      $('#photo').on('change', function(){
+        const file = this.files[0];
+        if(!file) return;
+        $('#preview').attr('src', URL.createObjectURL(file)).removeClass('d-none');
+      });
+
+      $('#recipe-form').on('submit', function(e){
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('/api/recipes', {
+          method: 'POST', body: formData
+        })
+        .then(r => r.json())
+        .then(json => {
+          if(json.success){
+            alert('Recipe uploaded!');
+            window.location.href = '/';
+          } else {
+            alert('Error: ' + json.error);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Something went wrong.');
+        });
+      });
+    });
+    </script>
+  </body>
+</html>
