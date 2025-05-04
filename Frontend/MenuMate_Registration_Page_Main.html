@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MenuMate Registration</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for tooltip icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      background-color: #C7E8CA;
+      color: #333;
+      font-family: 'Oswald', sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #D75A61; /* Less saturated red for better contrast */
+      font-weight: 700;
+    }
+
+    .card {
+      background-color: #5D9C59;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      color: white;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    .form-control {
+      background-color: #DDF7E3;
+      color: #000;
+      border: 1px solid #ccc;
+    }
+
+    .form-control::placeholder {
+      color: #777;
+    }
+
+    .form-control:invalid {
+      border-color: #dc3545;
+    }
+
+    .form-control:valid {
+      border-color: #28a745;
+    }
+
+    .form-section {
+      margin-bottom: 1.5rem;
+    }
+
+    #passwordStrength {
+      height: 5px;
+      background-color: red;
+      transition: width 0.3s ease-in-out, background-color 0.3s;
+    }
+
+    #passwordFeedback {
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .btn-submit {
+      background-color: #DF2E38;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      background-color: #b6222c;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <h1 class="mb-4 text-center">MenuMate Registration</h1>
+
+      <form id="registrationForm" novalidate>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="firstName">First Name *</label>
+            <input type="text" id="firstName" class="form-control" required>
+          </div>
+          <div class="col">
+            <label for="lastName">Last Name *</label>
+            <input type="text" id="lastName" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label for="email">Email *</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+
+        <div class="form-section">
+          <label for="password">Password *</label>
+          <input type="password" id="password" class="form-control" required minlength="6">
+          <div id="passwordStrength"></div>
+          <div id="passwordFeedback"></div>
+        </div>
+
+        <div class="form-section">
+          <label for="dob">Date of Birth *</label>
+          <input type="date" id="dob" class="form-control" required>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label for="heightFeet">Height *</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="heightFeet" class="form-control" placeholder="Feet" min="0" required>
+              </div>
+              <div class="col">
+                <input type="number" id="heightInches" class="form-control" placeholder="Inches" min="0" max="11" required>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label for="weightLbs">Weight (lbs) *</label>
+            <input type="number" id="weightLbs" class="form-control" placeholder="150" min="0" required>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label for="gender">Gender *</label>
+          <select id="gender" class="form-control" required>
+            <option selected disabled value="">Select gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Non-binary</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="activityLevel">Activity Level *</label>
+          <select id="activityLevel" class="form-control" required>
+            <option selected disabled value="">Select your activity level</option>
+            <option>Sedentary (little or no exercise)</option>
+            <option>Lightly active (1–3 days/week)</option>
+            <option>Moderately active (3–5 days/week)</option>
+            <option>Very active (6–7 days/week)</option>
+            <option>Super active (intense daily training)</option>
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="dietaryGoal">Dietary Goal (Max 300 Characters)</label>
+          <textarea id="dietaryGoal" class="form-control" rows="3" maxlength="300" placeholder="E.g., lose weight, gain muscle, improve energy..."></textarea>
+        </div>
+
+        <div class="form-section">
+          <label for="dietaryRestrictions">Dietary Restrictions or Preferences (Max 150 Characters)</label>
+          <input type="text" id="dietaryRestrictions" class="form-control" maxlength="150" placeholder="e.g., Vegan, Gluten-free, Kosher">
+        </div>
+
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" id="experiencePassCheck" checked>
+          <label class="form-check-label" for="experiencePassCheck">
+            Opt in for ExperiencePass
+            <span class="ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="ExperiencePass is a feature that allows your account to share basic and recent information such as your health progress, saved recipes or posts, recent achievements, and food you’ve logged.">
+              <i class="fas fa-info-circle text-light"></i>
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-submit">Create an Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Enable Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+
+    window.onload = () => {
+      const params = new URLSearchParams(window.location.search);
+      const emailParam = params.get("email");
+      const fromGoogle = params.get("fromGoogle") === "true";
+
+      const emailField = document.getElementById("email");
+      const passwordField = document.getElementById("password");
+
+      if (fromGoogle && emailParam) {
+        emailField.value = emailParam;
+        emailField.readOnly = true;
+
+        passwordField.disabled = true;
+        passwordField.removeAttribute("required");
+        passwordField.placeholder = "Password not required (Google login)";
+        document.getElementById("passwordStrength").style.display = "none";
+        document.getElementById("passwordFeedback").style.display = "none";
+      }
+    };
+
+    const form = document.getElementById('registrationForm');
+    const passwordInput = document.getElementById('password');
+    const strengthBar = document.getElementById('passwordStrength');
+    const feedback = document.getElementById('passwordFeedback');
+
+    passwordInput.addEventListener('input', () => {
+      const val = passwordInput.value;
+      let strength = 0;
+      if (val.length >= 6) strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[\W]/.test(val)) strength++;
+
+      const bars = ["25%", "50%", "75%", "100%"];
+      const colors = ["red", "orange", "#ffc107", "#28a745"];
+      const texts = ["Weak", "Moderate", "Good", "Strong"];
+
+      strengthBar.style.width = bars[strength - 1] || "0";
+      strengthBar.style.backgroundColor = colors[strength - 1] || "transparent";
+      feedback.textContent = texts[strength - 1] || "";
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const fromGoogle = params.get("fromGoogle") === "true";
+
+      const data = {
+        email: document.getElementById("email").value,
+        password: fromGoogle ? "" : document.getElementById("password").value,
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        dob: document.getElementById("dob").value,
+        heightFeet: document.getElementById("heightFeet").value,
+        heightInches: document.getElementById("heightInches").value,
+        weightLbs: document.getElementById("weightLbs").value,
+        gender: document.getElementById("gender").value,
+        activityLevel: document.getElementById("activityLevel").value,
+        dietaryGoal: document.getElementById("dietaryGoal").value,
+        dietaryRestrictions: document.getElementById("dietaryRestrictions").value,
+        experiencePassOptIn: document.getElementById("experiencePassCheck").checked
+      };
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/register`, {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const resData = await res.json();
+        if (res.ok) {
+          alert("✅ Registration successful!");
+          window.location.href = "https://kerolosassad.github.io/MenuMate/";
+        } else {
+          alert("❌ " + resData.message);
+        }
+      } catch (err) {
+        alert("⚠️ Could not connect to backend.");
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
