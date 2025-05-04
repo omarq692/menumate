@@ -5,3 +5,4 @@ authlib
 python-dotenv
 gunicorn
 requests
+redis      //Used for geolocation in a radius
