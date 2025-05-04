@@ -1,91 +1,141 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shared Experiences</title>
 
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
   <script src="config.js"></script>
 
   <style>
     body {
-      background-color: #2d6a4f;
-      color: white;
+      background-color: #C7E8CA;
       font-family: 'Oswald', sans-serif;
+      color: #333;
       padding: 2rem;
     }
-    .header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+
+    h1 {
+      text-align: center;
       margin-bottom: 2rem;
+      color: #D75A61;
+      font-weight: 700;
     }
+
+    #statusMessage {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #444;
+    }
+
     .shared-entry {
-      background-color: #1b4332;
-      padding: 1rem;
+      background-color: #5D9C59;
+      color: white;
+      padding: 1.5rem;
       border-radius: 1rem;
       margin-bottom: 1rem;
-      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease, background-color 0.3s ease;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
+
+    .shared-entry:hover {
+      transform: scale(1.01);
+    }
+
     .shared-entry.expanded {
-      background-color: #2f5f49;
+      background-color: #4a8a4f;
     }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
     .entry-details {
       display: none;
       margin-top: 1rem;
     }
+
     .shared-entry.expanded .entry-details {
       display: block;
     }
+
     .action-buttons {
       margin-top: 1rem;
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
+
     .btn-action {
       border: none;
-      padding: 6px 14px;
+      padding: 0.5rem 1.2rem;
       font-size: 0.9rem;
       border-radius: 50rem;
       color: white;
-      white-space: nowrap;
+      transition: background-color 0.2s ease;
     }
+
     .btn-starred {
-      background-color: #52b788;
+      background-color: #DF2E38;
     }
+
+    .btn-starred:hover {
+      background-color: #b6222c;
+    }
+
     .btn-delete {
-      background-color: #e63946;
+      background-color: #444;
+    }
+
+    .btn-delete:hover {
+      background-color: #222;
+    }
+
+    .text-light-placeholder {
+      color: #d8f3dc !important;
+    }
+
+    @media (max-width: 576px) {
+      .entry-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
+
 <body>
-
   <div class="container">
-    <div class="header">
-      <h1>Shared Experiences With You</h1>
-    </div>
-
-    <div id="sharedContainer" class="mt-4"></div>
+    <h1>Shared Experiences Nearby</h1>
+    <div id="statusMessage">Updating location and fetching shared experiences...</div>
+    <div id="sharedContainer"></div>
   </div>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
     const container = document.getElementById('sharedContainer');
+    const statusMessage = document.getElementById('statusMessage');
+
+    function showStatus(text, type = 'info') {
+      statusMessage.textContent = text;
+      statusMessage.style.color = type === 'error' ? '#DF2E38' : '#5D9C59';
+    }
 
     async function fetchSharedExperiences() {
       try {
-        const res = await fetch(${API_BASE_URL}/api/shared_experiences, { credentials: 'include' });
+        const res = await fetch(`${API_BASE_URL}/api/shared_experiences`, { credentials: 'include' });
         const data = await res.json();
 
         if (!Array.isArray(data) || data.length === 0) {
-          container.innerHTML = "<p class='text-center text-light'>No shared experiences nearby at the moment.</p>";
+          container.innerHTML = "<p class='text-center fw-bold' style='color: #5D9C59;'>No shared experiences nearby right now.</p>";
           return;
         }
 
@@ -96,22 +146,25 @@
           card.className = 'shared-entry';
           const name = exp.name || exp.email.split('@')[0];
 
-          card.innerHTML = 
-            <strong>${name}</strong>
+          card.innerHTML = `
+            <div class="entry-header">
+              <span>${name}</span>
+              <span>${exp.starred ? '★' : '☆'}</span>
+            </div>
             <div class="entry-details">
               <p><strong>Recipes:</strong> ${exp.recipes || 'N/A'}</p>
               <p><strong>Achievements:</strong> ${exp.achievements || 'N/A'}</p>
               <p><strong>Hobbies:</strong> ${exp.hobbies || 'N/A'}</p>
               <div class="action-buttons">
                 <button class="btn-action btn-starred" onclick="event.stopPropagation(); toggleStar('${exp.email}')">
-                  ${exp.starred ? '★ Unstar' : '☆ Save'}
+                  ${exp.starred ? 'Unstar' : 'Save'}
                 </button>
                 <button class="btn-action btn-delete" onclick="event.stopPropagation(); deleteOneShared('${exp.email}')">
-                  🗑 Delete
+                  Delete
                 </button>
               </div>
             </div>
-          ;
+          `;
 
           card.addEventListener('click', () => {
             card.classList.toggle('expanded');
@@ -121,35 +174,39 @@
         });
       } catch (error) {
         console.error('Error fetching shared experiences:', error);
-        container.innerHTML = "<p class='text-danger'>Failed to load shared experiences.</p>";
+        showStatus("Failed to load shared experiences.", 'error');
       }
     }
 
     async function toggleStar(senderEmail) {
       try {
-        await fetch(${API_BASE_URL}/api/shared/star, {
+        await fetch(`${API_BASE_URL}/api/shared/star`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: senderEmail })
         });
+        showStatus("Updated starred status.");
         fetchSharedExperiences();
       } catch (error) {
         console.error('Error toggling star:', error);
+        showStatus("Failed to update star.", 'error');
       }
     }
 
     async function deleteOneShared(senderEmail) {
       try {
-        await fetch(${API_BASE_URL}/api/shared/delete_one, {
+        await fetch(`${API_BASE_URL}/api/shared/delete_one`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: senderEmail })
         });
+        showStatus("Experience deleted.");
         fetchSharedExperiences();
       } catch (error) {
-        console.error('Error deleting one shared experience:', error);
+        console.error('Error deleting experience:', error);
+        showStatus("Failed to delete experience.", 'error');
       }
     }
 
@@ -158,24 +215,24 @@
       navigator.geolocation.getCurrentPosition(async (position) => {
         try {
           const { latitude, longitude } = position.coords;
-          await fetch(${API_BASE_URL}/api/track_location, {
+          await fetch(`${API_BASE_URL}/api/track_location`, {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ latitude, longitude })
           });
-          await fetchSharedExperiences();
+          fetchSharedExperiences();
         } catch (error) {
           console.error('Error sending location:', error);
+          showStatus("Location update failed.", 'error');
         }
       }, (error) => {
-        console.warn('Geolocation permission denied.', error);
+        console.warn('Geolocation denied.', error);
+        showStatus("Location access is required for sharing.");
       });
     }
 
-    // Regularly update location and refresh nearby experiences
-    setInterval(sendLocation, 30000); // every 30 seconds
-
+    setInterval(sendLocation, 30000);
     sendLocation();
   </script>
 </body>
