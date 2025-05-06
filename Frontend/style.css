@@ -131,3 +131,110 @@ footer .footer-logo img {
   .footer-wrappr ul.list-inline li a {
     color: black !important;
   }
+/* ——— Green‐modal styling ——— */
+.modal-content.green-modal {
+  background-color: #6DBE45;
+  color: #fff;
+}
+.modal-content.green-modal .modal-header {
+  border-bottom: none;
+}
+.table-white th,
+.table-white td {
+  color: #fff;
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* ——— Constrain the modal image size ——— */
+#recipeModalImg {
+  display: block;
+  margin: 0 auto 1rem;
+  max-width: 100%;
+  max-height: 300px;    /* ← tweak this if you want it taller/shorter */
+  object-fit: cover;
+}
+
+/* 1) Push modal down below the sticky nav */
+.modal.fade .modal-dialog {
+  margin-top: 80px;   /* adjust to match your header’s height + desired gap */
+}
+
+/* 2) Center the modal title */
+.modal-content.green-modal .modal-header {
+  justify-content: center;    /* centers the title */
+}
+.modal-content.green-modal .modal-header .modal-title {
+  font-size: 2rem;            /* recipe title size */
+  font-weight: 600;           /* optional: make it stand out */
+}
+
+/* 3) Enlarge the body text */
+.modal-content.green-modal .modal-body {
+  font-size: 1.2rem;          /* base size for desc, recipe, nutrition */
+  line-height: 1.5;
+}
+
+/* recipe instructions & nutrition table */
+.modal-content.green-modal #recipeModalRecipe,
+.modal-content.green-modal #recipeModalNutrition,
+.modal-content.green-modal #recipeModalDesc {
+  font-size: 1.1rem;
+}
+
+/* keep your existing table-white rules for color/borders */
+
+/* ——— Ensure the modal sits fully below the nav on mobile ——— */
+@media (max-width: 576px) {
+  .modal.fade .modal-dialog {
+    margin-top: 100px !important;  /* push the whole modal further down */
+  }
+}
+
+/* ——— Force the close button on top and reposition for small screens ——— */
+.modal-content.green-modal .modal-header .close {
+  z-index: 2000;       /* put it above everything else */
+}
+
+@media (max-width: 576px) {
+  .modal-content.green-modal .modal-header {
+    padding-top: 2rem; /* give extra top padding so the X isn’t jammed under the header */
+  }
+  .modal-content.green-modal .modal-header .close {
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    font-size: 1.5rem !important;
+  }
+}
+/* Style & position for the close button in the green modal */
+.modal-content.green-modal .modal-header {
+  position: relative;          /* allow absolute-placement inside */
+  justify-content: center;     /* keep title centered */
+}
+.modal-content.green-modal .modal-header .close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.75rem;
+  color: #fff;
+  opacity: 1;
+}
+.modal-content.green-modal .modal-header .close:hover {
+  color: #eee;
+}
+
+.avatar-circle {
+  width: 120px;
+  height: 120px;
+  background-color: #0d3b25;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.avatar-circle img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
