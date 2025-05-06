@@ -6,9 +6,52 @@
     <title>MenuMate | Profile</title>
     <meta name="description" content="Your recipe posts, likes, and bio" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/img/MenuMate_Logo.png"
+    />
+
+    <!-- CSS here -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="assets/css/slicknav.css" />
+    <link rel="stylesheet" href="assets/css/flaticon.css" />
+    <link rel="stylesheet" href="assets/css/gijgo.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/animated-headline.css" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.css" />
     <link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="assets/css/slick.css" />
+    <link rel="stylesheet" href="assets/css/nice-select.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Mobile tweaks -->
+    <style>
+      @media (max-width: 576px) {
+        .slider-area2 .slider-height2 {
+          padding: 2rem 0;
+          height: auto;
+        }
+        .hero__caption h1 {
+          font-size: 1.75rem;
+        }
+        .hero__caption p {
+          font-size: 0.9rem;
+        }
+        .avatar-circle img {
+          width: 80px;
+          height: 80px;
+        }
+      }
+      @media (max-width: 992px) {
+        .header-area .main-header {
+          padding: 0.75rem 1rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
@@ -28,14 +71,17 @@
                 <div
                   class="menu-main d-flex align-items-center justify-content-end"
                 >
-                  <nav class="main-menu f-right d-none d-lg-block">
-                    <ul id="navigation">
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="explore.html">Explore</a></li>
-                      <li><a href="nutrition.html">Nutrition</a></li>
-                      <li><a class="active" href="profile.html">Profile</a></li>
-                    </ul>
-                  </nav>
+                  <div class="main-menu f-right d-none d-lg-block">
+                    <nav>
+                      <ul id="navigation">
+                        <li><a href="explore.html">Explore</a></li>
+                        <li><a href="nutrition.html">Nutrition</a></li>
+                        <li>
+                          <a class="active" href="profile.html">Profile</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
                   <div class="header-right-btn f-right d-none d-lg-block ml-15">
                     <a href="#" class="btn header-btn">Log In</a>
                   </div>
@@ -50,99 +96,96 @@
       </div>
     </header>
 
-    <main class="py-5">
-      <div class="container">
-        <!-- Profile Header -->
-        <div class="row align-items-center mb-5">
-          <div class="col-md-3 text-center">
-            <img
-              src="assets/img/profile/avatar.png"
-              class="rounded-circle mb-3"
-              alt="Avatar"
-              width="120"
-            />
-          </div>
-          <div class="col-md-9">
-            <h2>Username</h2>
-            <p class="text-muted">
-              Your bio goes here. Share a bit about your cooking style, favorite
-              cuisines, or what inspires you!
-            </p>
-          </div>
-        </div>
-
-        <!-- My Posts -->
-        <h2 class="mb-4">My Posts</h2>
-        <div class="row">
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img
-                src="assets/img/recipes/sample1.jpg"
-                class="card-img-top"
-                alt="Recipe"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Avocado Quinoa Salad</h5>
-                <p class="card-text">
-                  <i class="fas fa-heart text-danger"></i> 24 Likes
-                </p>
+    <main>
+      <!-- Hero Section -->
+      <div class="slider-area slider-area2">
+        <div class="single-slider d-flex align-items-center slider-height2">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-xl-7 col-lg-8 col-md-10">
+                <div class="hero-wrapper">
+                  <div class="hero__caption">
+                    <h1>Your Profile</h1>
+                    <p>View your recipes and the ones you’ve liked.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-5 col-lg-4 col-md-2 text-center">
+                <div class="avatar-circle mb-2">
+                  <img
+                    src="assets/img/profile/avatar-placeholder.png"
+                    alt="Avatar"
+                    class="img-fluid rounded-circle"
+                  />
+                </div>
+                <p class="mt-2" style="color: #0d3b25">@yourusername</p>
               </div>
             </div>
           </div>
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img
-                src="assets/img/recipes/sample2.jpg"
-                class="card-img-top"
-                alt="Recipe"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Berry Overnight Oats</h5>
-                <p class="card-text">
-                  <i class="fas fa-heart text-danger"></i> 18 Likes
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- More posts... -->
-        </div>
-
-        <!-- Liked Recipes -->
-        <h2 class="mt-5 mb-4">Liked Recipes</h2>
-        <div class="row">
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img
-                src="assets/img/recipes/sample3.jpg"
-                class="card-img-top"
-                alt="Recipe"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Zucchini Noodle Bowl</h5>
-                <p class="card-text">
-                  <i class="fas fa-heart text-danger"></i> Liked
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img
-                src="assets/img/recipes/sample4.jpg"
-                class="card-img-top"
-                alt="Recipe"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Chocolate Chia Pudding</h5>
-                <p class="card-text">
-                  <i class="fas fa-heart text-danger"></i> Liked
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- More likes... -->
         </div>
       </div>
+
+      <!-- Your Recipes -->
+      <section class="service-area section-padding40">
+        <div class="container">
+          <div class="section-tittle text-center mb-50">
+            <h2>Your Recipes</h2>
+          </div>
+          <div class="row" id="your-recipes">
+            <!-- Sample Recipe -->
+            <div class="col-12 col-sm-6 col-md-4 mb-50">
+              <div class="single-cat text-center">
+                <div class="cat-icon mb-20">
+                  <img
+                    src="assets/img/recipes/oat-pancakes.svg"
+                    alt="Recipe"
+                    class="img-fluid"
+                  />
+                </div>
+                <div class="cat-cap">
+                  <h5><a href="#">Banana Oat Pancakes</a></h5>
+                  <p>
+                    Wholesome pancakes with ripe bananas and oats. No flour
+                    needed!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Add more user's posts dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Liked Recipes -->
+      <section class="service-area section-padding40">
+        <div class="container">
+          <div class="section-tittle text-center mb-50">
+            <h2>Liked Recipes</h2>
+          </div>
+          <div class="row" id="liked-recipes">
+            <!-- Sample Liked Recipe -->
+            <div class="col-12 col-sm-6 col-md-4 mb-50">
+              <div class="single-cat text-center">
+                <div class="cat-icon mb-20">
+                  <img
+                    src="assets/img/recipes/salad-bowl.svg"
+                    alt="Liked Recipe"
+                    class="img-fluid"
+                  />
+                </div>
+                <div class="cat-cap">
+                  <h5><a href="#">Avocado Quinoa Salad</a></h5>
+                  <p>
+                    Fresh, protein-packed bowl with avocado, quinoa, and lemon
+                    vinaigrette.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Add more liked posts dynamically -->
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -163,14 +206,23 @@
                         alt=""
                     /></a>
                   </div>
-                  <nav>
-                    <ul class="footer-menu">
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="explore.html">Explore</a></li>
-                      <li><a href="nutrition.html">Nutrition</a></li>
-                      <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                  </nav>
+                  <div class="header-area">
+                    <div class="main-header main-header2">
+                      <div
+                        class="menu-main d-flex align-items-center justify-content-start"
+                      >
+                        <div class="main-menu main-menu2">
+                          <nav>
+                            <ul>
+                              <li><a href="explore.html">Explore</a></li>
+                              <li><a href="nutrition.html">Nutrition</a></li>
+                              <li><a href="profile.html">Profile</a></li>
+                            </ul>
+                          </nav>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -188,6 +240,8 @@
                         document.write(new Date().getFullYear());
                       </script>
                       MenuMate. All rights reserved.
+                      <i class="fa fa-heart" aria-hidden="true"></i> Eat clean.
+                      Share freely.
                     </p>
                   </div>
                 </div>
@@ -198,8 +252,34 @@
       </div>
     </footer>
 
+    <!-- Scroll Up -->
+    <div id="back-top">
+      <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+    <!-- JS files -->
+    <script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.slicknav.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/animated.headline.js"></script>
+    <script src="assets/js/jquery.magnific-popup.js"></script>
+    <script src="assets/js/gijgo.min.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/jquery.sticky.js"></script>
+    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="assets/js/waypoints.min.js"></script>
+    <script src="assets/js/jquery.countdown.min.js"></script>
+    <script src="assets/js/hover-direction-snake.min.js"></script>
+    <script src="assets/js/contact.js"></script>
+    <script src="assets/js/jquery.form.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+    <script src="assets/js/mail-script.js"></script>
+    <script src="assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>
